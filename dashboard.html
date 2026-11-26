@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Syzora Nexus Gaming Arena customer and admin dashboard demonstration for UiTM ENT300.">
+<meta name="author" content="Syzora Nexus">
+<title>My Account — Syzora Nexus Gaming Arena</title>
+
+<link href="css/style.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+/* Dashboard authentication styles */
+#demoAuthArea {
+    max-width: 530px;
+    margin: 0 auto;
+}
+#demoAuthArea .form-card {
+    width: 100%;
+}
+.demo-auth-tabs[hidden] {
+    display: none !important;
+}
+.demo-auth-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.demo-auth-header h2 {
+    margin: 8px 0;
+}
+.demo-auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 18px 0 24px;
+}
+.demo-auth-tabs button {
+    flex: 1;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.045);
+    color: inherit;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 9px;
+    font: inherit;
+}
+.demo-auth-tabs button.active {
+    background: #7c3aed;
+    color: #fff;
+    border-color: #7c3aed;
+}
+.demo-auth-panel[hidden],
+#demoAuthArea[hidden],
+#demoAccountArea[hidden] {
+    display: none !important;
+}
+.demo-auth-links {
+    margin: 15px 0 0;
+    text-align: center;
+}
+.demo-auth-link {
+    border: 0;
+    padding: 3px;
+    background: none;
+    color: #22d3ee;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.demo-auth-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.demo-auth-panel .btn {
+    width: 100%;
+    justify-content: center;
+}
+.demo-auth-panel .form-group {
+    margin-bottom: 15px;
+}
+.demo-auth-panel .demo-feedback:not(:empty) {
+    margin-top: 14px;
+}
+.demo-recovery-code {
+    padding: 12px;
+    border: 1px dashed #22d3ee;
+    border-radius: 8px;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+}
+@media(max-width: 520px) {
+    #demoAuthArea {
+        max-width: 100%;
+    }
+    .demo-auth-tabs button {
+        padding: 10px 6px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div id="preloader">
+    <div class="preloader-logo">SYZORA NEXUS</div>
+    <div class="preloader-bar"><span></span></div>
+</div>
+
+<canvas id="particles"></canvas>
+
+<header class="nav">
+    <a class="brand" href="index.html">
+        <div class="brand-mark">
+            <i class="fa-solid fa-gamepad"></i>
+        </div>
+        <div>
+            <div class="brand-name">SYZORA<span>NEXUS</span></div>
+            <span class="brand-tag">GAMING ARENA</span>
+        </div>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+
+        <li class="has-sub">
+            <span class="nav-link">Services</span>
+            <ul class="submenu">
+                <li><a href="console-rental.html">Console Rental</a></li>
+                <li><a href="available-games.html">Available Games</a></li>
+                <li><a href="private-rooms.html">Private Gaming Rooms</a></li>
+                <li><a href="tournament-arena.html">Tournament Arena</a></li>
+                <li><a href="event-packages.html">Birthday &amp; Event Packages</a></li>
+            </ul>
+        </li>
+
+        <li class="has-sub">
+            <span class="nav-link">Membership</span>
+            <ul class="submenu">
+                <li><a href="membership.html">Membership Program</a></li>
+                <li><a href="gaming-passport.html">Gaming Passport</a></li>
+                <li><a href="plans.html">Plans &amp; Subscriptions</a></li>
+            </ul>
+        </li>
+
+        <li class="has-sub">
+            <span class="nav-link">Information</span>
+            <ul class="submenu">
+                <li><a href="facilities.html">Our Facilities</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="community-rules.html">Community Rules</a></li>
+            </ul>
+        </li>
+
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="nav-cta" href="booking.html">Book Now</a></li>
+        <li>
+            <a class="nav-dash" data-testid="nav-dashboard-link" href="dashboard.html">
+                <i class="fa-solid fa-user"></i>Dashboard
+            </a>
+        </li>
+    </ul>
+</header>
+
+<section class="page-header">
+    <div class="container">
+        <div class="page-breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            Dashboard
+        </div>
+        <h1 class="page-title">My Account</h1>
+        <p>Sign in to manage your bookings or access the demonstration dashboard.</p>
+    </div>
+</section>
+
+<section class="section">
+<div class="container">
+
+    <!-- AUTHENTICATION AREA -->
+    <div id="demoAuthArea">
+        <div class="form-card">
+
+            <div class="demo-auth-header">
+                <div class="eyebrow">SYZORA NEXUS · ACCOUNT ACCESS</div>
+                <h2 id="demoAuthHeading">Welcome Back</h2>
+                <p id="demoAuthSubtitle">Sign in to access your account.</p>
+            </div>
+
+            <div class="demo-auth-tabs" id="demoAuthTabs" aria-label="Account options">
+                <button type="button" id="demoShowLogin" class="active" aria-pressed="true">Sign In</button>
+                <button type="button" id="demoShowSignup" aria-pressed="false">Sign Up</button>
+            </div>
+
+            <!-- SIGN IN -->
+            <div id="demoLoginPanel" class="demo-auth-panel">
+                <form id="demoLogin">
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input id="loginEmail" type="email" required
+                               autocomplete="username" maxlength="120"
+                               placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input id="loginPassword" type="password" required
+                               autocomplete="current-password"
+                               placeholder="Enter your password">
+                    </div>
+
+                    <div class="demo-auth-actions">
+                        <button type="button" class="demo-auth-link"
+                                id="demoShowForgot">Forgot password?</button>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Sign In</button>
+                    <p class="demo-feedback" id="loginFeedback"
+                       role="status" aria-live="polite"></p>
+                </form>
+
+                <p class="demo-auth-links">
+                    Don't have an account?
+                    <button type="button" class="demo-auth-link"
+                            id="demoSignupLink">Sign Up</button>
+                </p>
+
+                <p class="demo-note">
+                    Demo admin:
+                    <code>admin@syzoranexus.demo</code> /
+                    <code>AdminDemo123!</code>
+                    (public credentials; not secure).
+                </p>
+            </div>
+
+            <!-- SIGN UP -->
+            <div id="demoSignupPanel" class="demo-auth-panel" hidden>
+                <form id="demoSignup">
+
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input id="signupName" required maxlength="80"
+                               autocomplete="name"
+                               placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPhone">Phone Number</label>
+                        <input id="signupPhone" type="tel" required
+                               maxlength="20" autocomplete="tel"
+                               inputmode="tel"
+                               placeholder="e.g. 0123456789">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input id="signupEmail" type="email" required
+                               maxlength="120" autocomplete="email"
+                               placeholder="Enter your email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupPassword">Password (at least 8 characters)</label>
+                        <input id="signupPassword" type="password"
+                               required minlength="8"
+                               autocomplete="new-password"
+                               placeholder="Create a password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <input id="signupConfirmPassword" type="password"
+                               required minlength="8"
+                               autocomplete="new-password"
+                               placeholder="Confirm your password">
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                        Create Account
+                    </button>
+
+                    <p class="demo-feedback" id="signupFeedback"
+                       role="status" aria-live="polite"></p>
+                </form>
+
+                <p class="demo-auth-links">
+                    Already have an account?
+                    <button type="button" class="demo-auth-link"
+                            id="demoLoginLink">Sign In</button>
+                </p>
+            </div>
+
+            <!-- FORGOT PASSWORD -->
+            <div id="demoForgotPanel" class="demo-auth-panel" hidden>
+                <p class="demo-note">
+                    For this offline academic prototype, enter your
+                    account email and the recovery code you received at signup.
+                    No reset email will be sent.
+                </p>
+
+                <form id="demoResetPassword">
+
+                    <div class="form-group">
+                        <label for="resetEmail">Registered Email</label>
+                        <input id="resetEmail" type="email" required
+                               autocomplete="email" maxlength="120"
+                               placeholder="Enter your registered email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resetCode">Recovery Code</label>
+                        <input id="resetCode" type="text" required
+                               autocomplete="off"
+                               placeholder="Enter your saved recovery code">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resetPassword">New Password</label>
+                        <input id="resetPassword" type="password" required
+                               minlength="8" autocomplete="new-password"
+                               placeholder="At least 8 characters">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resetConfirmPassword">Confirm New Password</label>
+                        <input id="resetConfirmPassword" type="password"
+                               required minlength="8"
+                               autocomplete="new-password"
+                               placeholder="Repeat new password">
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">
+                        Reset Password
+                    </button>
+
+                    <p class="demo-feedback" id="resetFeedback"
+                       role="status" aria-live="polite"></p>
+                </form>
+
+                <p class="demo-auth-links">
+                    <button type="button" class="demo-auth-link"
+                            id="demoBackToLogin">Back to Sign In</button>
+                </p>
+            </div>
+
+            <!-- RECOVERY CODE -->
+            <div id="demoRecoveryPanel" class="demo-auth-panel" hidden>
+                <h3>Account Created</h3>
+
+                <p class="demo-note">
+                    Save this recovery code now. You will need it if you
+                    forget your password. The demo does not email codes,
+                    and it will not show this one again.
+                </p>
+
+                <p id="demoRecoveryCode" class="demo-recovery-code"
+                   aria-live="polite"></p>
+
+                <button type="button" class="btn btn-primary"
+                        id="demoRecoveryContinue">
+                    I've Saved My Code — Continue
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CUSTOMER AND ADMIN DASHBOARD -->
+    <div id="demoAccountArea" hidden>
+
+        <div class="form-card">
+            <div class="eyebrow">SIGNED IN</div>
+            <h2 id="demoWelcome"></h2>
+            <p id="demoRole"></p>
+            <button class="btn btn-outline" id="demoLogout"
+                    type="button">Logout</button>
+        </div>
+
+        <div id="demoCustomerPanel" hidden>
+            <div class="form-card">
+                <h3>Your demo bookings</h3>
+                <div id="customerBookings"></div>
+            </div>
+        </div>
+
+        <div id="demoAdminPanel" hidden>
+            <div class="dash-row">
+                <div class="stat-card">
+                    <div class="label">Customer accounts</div>
+                    <div class="value" id="statUsers">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Bookings</div>
+                    <div class="value" id="statBookings">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Enquiries</div>
+                    <div class="value" id="statMessages">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Event interest</div>
+                    <div class="value" id="statEvents">0</div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3>Booking requests</h3>
+                <div id="adminBookings"></div>
+            </div>
+
+            <div class="form-card">
+                <h3>Contact enquiries</h3>
+                <div id="adminMessages"></div>
+            </div>
+
+            <div class="form-card">
+                <h3>Event interest</h3>
+                <div id="adminEvents"></div>
+            </div>
+
+            <div class="form-card">
+                <h3>Customer accounts</h3>
+                <div id="adminUsers"></div>
+            </div>
+
+            <div class="form-card">
+                <h3>Demo data tools</h3>
+                <p class="demo-note">
+                    Download a JSON copy of the local demo records
+                    or clear demo bookings and enquiries on this browser.
+                </p>
+                <button class="btn btn-outline" id="demoExport"
+                        type="button">Export demo records</button>
+                <button class="btn btn-outline" id="demoClear"
+                        type="button">Clear demo submissions</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+<footer class="footer">
+<div class="container">
+    <div class="footer-grid">
+
+        <div class="footer-about">
+            <div class="brand" style="margin-bottom:10px;">
+                <div class="brand-mark">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div>
+                    <div class="brand-name">SYZORA<span>NEXUS</span></div>
+                    <span class="brand-tag">GAMING ARENA</span>
+                </div>
+            </div>
+
+            <p>
+                Syzora Nexus Gaming Arena is a proposed console-gaming
+                venue developed as part of the UiTM ENT300 business
+                planning project.
+            </p>
+
+            <div class="social" style="margin-top:18px;">
+                <a aria-label="Facebook"
+                   href="https://www.facebook.com/share/1Ce7pMF3yW/?mibextid=wwXIfr"
+                   rel="noopener noreferrer" target="_blank">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a aria-label="Instagram"
+                   href="https://www.instagram.com/syzora.nexus.official?igsh=MTRnODNpaXVkbnVieA%3D%3D&amp;utm_source=qr"
+                   rel="noopener noreferrer" target="_blank">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a aria-label="TikTok"
+                   href="https://www.tiktok.com/@syzoranexus_?_r=1&amp;_t=ZS-97g9hEYd8Mv"
+                   rel="noopener noreferrer" target="_blank">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <h5>Explore</h5>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="facilities.html">Facilities</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h5>Services</h5>
+            <ul>
+                <li><a href="console-rental.html">Console Rental</a></li>
+                <li><a href="available-games.html">Game Library</a></li>
+                <li><a href="private-rooms.html">Private Rooms</a></li>
+                <li><a href="tournament-arena.html">Tournament Arena</a></li>
+                <li><a href="event-packages.html">Group Event Concepts</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h5>Visit</h5>
+            <ul>
+                <li>
+                    <i class="fa-solid fa-location-dot"
+                       style="color:var(--magenta);margin-right:6px;"></i>
+                    Candidate location: Seksyen 7, Shah Alam,
+                    Selangor, Malaysia (not confirmed)
+                </li>
+                <li>
+                    <i class="fa-solid fa-phone"
+                       style="color:var(--cyan);margin-right:6px;"></i>
+                    Phone: [REPLACE WITH VERIFIED BUSINESS CONTACT]
+                </li>
+                <li>
+                    <i class="fa-solid fa-envelope"
+                       style="color:var(--magenta);margin-right:6px;"></i>
+                    Email: [VERIFY OFFICIAL CONTACT]
+                </li>
+                <li>
+                    <i class="fa-solid fa-clock"
+                       style="color:var(--cyan);margin-right:6px;"></i>
+                    Proposed operating hours: 12:00 PM – 12:00 AM daily
+                    (subject to approval)
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="disclaimer">
+        <strong>Academic prototype notice:</strong>
+        Syzora Nexus Gaming Arena is a proposed business for UiTM ENT300.
+        This website demonstrates planned services and does not confirm
+        that the venue is operating, tournaments are scheduled,
+        registrations are open, or payments are available.
+        Any third-party game brands belong to their respective owners.
+    </div>
+
+    <div class="footer-bottom">
+        <div>© 2026 Syzora Nexus · UiTM ENT300 Business Plan Prototype</div>
+        <div>
+            Crafted with
+            <i class="fa-solid fa-heart" style="color:var(--magenta);"></i>
+            for pixel hunters
+        </div>
+    </div>
+</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="js/script.js"></script>
+<script src="js/demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+SYZORA NEXUS — POST-STAGE-18 INTEGRATION REVIEW
+19 November 2026
+
+SOURCE
+Syzora_Nexus_Stage_18_Dashboard_Updated.zip
+
+CHANGES
+- Updated js/script.js to remove unused browser-local demo authentication,
+  hardcoded sample account credentials, demo booking records, and simulated API
+  handlers for booking, payments, contact, tournaments, and administration.
+- Kept visual/interaction features: menu, reveal effects, particles, FAQ toggles,
+  countdown support, gallery lightbox, tilt/magnetic controls, photo slider,
+  and back-to-top.
+- Replaced generic form-success handling with an explicit non-operational
+  prototype message if any old data-form markup is reintroduced.
+- Retained all 18 revised HTML pages, existing CSS, and existing assets.
+
+CHECKS COMPLETED
+- All 18 expected HTML pages are present.
+- No unresolved local href/src/poster paths or missing HTML fragment targets.
+- Node.js syntax validation passed for shared js/script.js and inline scripts
+  in booking.html and dashboard.html.
+- No HTML forms remain in the 18 revised pages.
+- No former demo API or hardcoded demo-account references remain in shared JS.
+- Search for known obsolete business claims found no matches in HTML or JS.
+- Final ZIP integrity checked.
+
+NOT VERIFIED
+- Browser screenshot/interaction smoke test: available Chromium was blocked
+  from navigating to both file:// and local HTTP URLs by environment policy.
+- Third-party CDN resources (GSAP, AOS, icons/fonts) and externally embedded
+  media require network access for complete visual testing.
+- This is an academic demonstration, not a production booking/payment system.
+
+RECOMMENDED MANUAL TEST
+1. Extract ZIP; serve IML254-Syzora-Nexus-main using a local web server.
+2. Open index.html and click all navigation paths.
+3. Check FAQ open/close, gallery lightbox, facility photo slider.
+4. Test the booking estimator on desktop and mobile; verify console pricing.
+5. Test Dashboard customer/admin preview buttons.
+6. Check image rendering, third-party scripts, small-screen layout.
+7. Replace all labeled placeholder data only with confirmed group/business data.
